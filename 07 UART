@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "string.h"
+#include "esp_system.h"
+#include "esp_log.h"
 #include "driver/uart.h"
+#include "string.h"
 #include "driver/adc.h"
 #include "driver/ledc.h"
 
@@ -14,7 +16,7 @@ static const int RX_BUF_SIZE = 1024;
 
 #define UART UART_NUM_2
 
-
+int num = 0;
 
 void init(void) 
 {
@@ -34,8 +36,9 @@ void init(void)
 
 static void tx_task(void *arg)
 {
-    uart_write_bytes(UART, "Txdata", 6);
-    vTaskDelay(500 / portTICK_PERIOD_MS);
+    while (1) {
+        uart_write_bytes(UART, "Txdata", 6);
+    }
 }
 
 void app_main(void)
