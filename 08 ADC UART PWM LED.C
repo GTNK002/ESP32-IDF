@@ -10,13 +10,9 @@
 #include "driver/ledc.h"
 
 static const int RX_BUF_SIZE = 1024;
-
 #define TXD_PIN (GPIO_NUM_17)
 #define RXD_PIN (GPIO_NUM_16)
-
 #define UART UART_NUM_2
-
-int num = 0;
 
 #define SAMPLE_CNT 32
 static const adc1_channel_t adc_channel = ADC_CHANNEL_4;
@@ -57,7 +53,7 @@ void init(void)
     ledc_channel_config(&ledc_channel);
 }
 
-static void tx_task(void *arg)
+static void task1(void *arg)
 {
     while (1) {
         uint32_t adc_val = 0;
@@ -83,5 +79,5 @@ static void tx_task(void *arg)
 void app_main(void)
 {
     init();
-    xTaskCreate(tx_task, "uart_tx_task", 1024*2, NULL, configMAX_PRIORITIES-2, NULL);
+    xTaskCreate(task1, "task1", 1024*2, NULL, configMAX_PRIORITIES-1, NULL);
 }
