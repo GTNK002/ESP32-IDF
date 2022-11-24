@@ -63,7 +63,7 @@ static void task1(void *arg)
         uart_write_bytes(UART, cadc_val, 3);
         printf("%d", adc_val);
         printf("\n");
-        int led_speed = 730;
+        int led_speed = 0;
         if(adc_val > 500) {
             led_speed = 730;
         }
